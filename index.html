@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHC Texas STAR Medicaid | Pyx Health Engagement Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;600;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:   #49a601;
+    --lgreen:  #87d001;
+    --slate:   #2e4456;
+    --teal:    #29a4a2;
+    --blue:    #0076bf;
+    --orange:  #d6661a;
+    --purple:  #5542a7;
+    --gray1:   #d2dce8;
+    --gray2:   #eff1f3;
+    --gray3:   #f6f6f6;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #1a2631;
+    background: var(--gray3);
+  }
+
+  /* ── STICKY NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--slate);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    height: 52px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  }
+  .nav-brand {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--lgreen);
+    letter-spacing: .3px;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--gray1);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background .18s, color .18s;
+    letter-spacing: .4px;
+  }
+  .tab-btn:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .tab-btn.active { background: var(--green); color: #fff; font-weight: 700; }
+  .tp-toggle-btn {
+    background: transparent;
+    border: 1.5px solid var(--gray1);
+    color: var(--gray1);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .18s;
+    letter-spacing: .3px;
+  }
+  .tp-toggle-btn:hover { border-color: #fff; color: #fff; }
+  .tp-toggle-btn.active { background: var(--lgreen); border-color: var(--lgreen); color: #fff; font-weight: 700; }
+
+  /* ── TABS ── */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1c2d3c 0%, var(--slate) 60%, #1a3a2e 100%);
+    padding: 44px 40px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+  }
+  .hero-left { flex: 1; }
+  .hero-eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .hero-h1 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .hero-h1 .brand { color: var(--green); }
+  .hero-h1 .divider { color: var(--gray1); font-weight: 300; margin: 0 10px; }
+  .hero-h1 .sub-brand { color: #c8d8e8; font-weight: 300; font-size: 22px; }
+  .hero-sub {
+    font-size: 12.5px;
+    color: var(--gray1);
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+  .hero-kpis {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 200px;
+  }
+  .hero-kpi {
+    background: rgba(255,255,255,.08);
+    border-left: 3px solid var(--green);
+    border-radius: 6px;
+    padding: 10px 14px;
+    text-align: right;
+  }
+  .hero-kpi .val {
+    font-family: 'Roboto Slab', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .hero-kpi .lbl {
+    font-size: 10.5px;
+    color: var(--gray1);
+    font-weight: 500;
+    letter-spacing: .3px;
+    margin-top: 3px;
+  }
+  .hero-kpi:nth-child(2) { border-left-color: var(--teal); }
+  .hero-kpi:nth-child(3) { border-left-color: var(--lgreen); }
+
+  /* ── VALUE ANCHOR BANNER ── */
+  .value-banner {
+    background: #fff;
+    border-bottom: 4px solid var(--green);
+    border-top: 1px solid var(--gray1);
+    padding: 20px 40px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: #2a3a46;
+  }
+  .value-banner strong { color: var(--slate); }
+  .value-banner.dark {
+    background: var(--slate);
+    color: var(--gray2);
+    border-bottom-color: var(--lgreen);
+    border-top: none;
+  }
+  .value-banner.dark strong { color: var(--lgreen); }
+
+  /* ── MAIN CONTENT WRAPPER ── */
+  .content { padding: 32px 40px 60px; max-width: 1200px; margin: 0 auto; }
+
+  /* ── SECTION HEADERS ── */
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--teal);
+    margin-bottom: 5px;
+  }
+  .section-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 6px;
+  }
+  .section-lead {
+    font-size: 13px;
+    color: #4a5a68;
+    line-height: 1.65;
+    margin-bottom: 22px;
+    max-width: 800px;
+  }
+  .section-block { margin-bottom: 44px; }
+
+  /* ── SWIMLANE TIMELINE ── */
+  .tl-wrap {
+    margin-bottom: 44px;
+  }
+  .tl-label-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .tl-phase-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: var(--slate);
+    text-align: center;
+    flex: 1;
+    padding: 0 4px;
+  }
+  .tl-sw-bar {
+    position: relative;
+    height: 36px;
+    border-radius: 8px;
+    overflow: visible;
+    display: flex;
+  }
+  .tl-phase {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .3px;
+  }
+  .tl-phase.done    { background: var(--green);  flex: 1; border-radius: 8px 0 0 8px; }
+  .tl-phase.active  { background: var(--teal);   flex: 1; }
+  .tl-phase.building{ background: var(--gray1);  flex: 1; color: var(--slate); }
+  .tl-phase.upcoming{ background: var(--gray2);  flex: 1; border-radius: 0 8px 8px 0; color: #8899a6; }
+  .tl-now {
+    position: absolute;
+    top: -14px;
+    left: 26%;
+    transform: translateX(-50%);
+    background: var(--orange);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: .5px;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0,0,0,.18);
+  }
+  .tl-sub-row {
+    display: flex;
+    margin-top: 6px;
+  }
+  .tl-date {
+    font-size: 10px;
+    color: #7a8a98;
+    text-align: center;
+    flex: 1;
+    padding: 0 4px;
+  }
+
+  /* ── KPI CARDS ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  .kpi-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 18px 16px 14px;
+    border-top: 4px solid var(--green);
+    box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  }
+  .kpi-card .kpi-val {
+    font-family: 'Roboto Slab', serif;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .kpi-card .kpi-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: var(--slate);
+    margin-bottom: 7px;
+  }
+  .kpi-card .kpi-ctx {
+    font-size: 11.5px;
+    color: #5a6a78;
+    line-height: 1.5;
+  }
+  .kpi-card.green  { border-top-color: var(--green);  } .kpi-card.green  .kpi-val { color: var(--green);  }
+  .kpi-card.teal   { border-top-color: var(--teal);   } .kpi-card.teal   .kpi-val { color: var(--teal);   }
+  .kpi-card.blue   { border-top-color: var(--blue);   } .kpi-card.blue   .kpi-val { color: var(--blue);   }
+  .kpi-card.orange { border-top-color: var(--orange); } .kpi-card.orange .kpi-val { color: var(--orange); }
+  .kpi-card.purple { border-top-color: var(--purple); } .kpi-card.purple .kpi-val { color: var(--purple); }
+  .kpi-card.slate  { border-top-color: var(--slate);  } .kpi-card.slate  .kpi-val { color: var(--slate);  }
+
+  /* ── TALKING POINT BLOCKS ── */
+  .tp-block {
+    display: none;
+    background: linear-gradient(135deg, #f0f7e8, #e8f4ff);
+    border-left: 4px solid var(--green);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin-top: 12px;
+    font-size: 12.5px;
+    color: #2a3a46;
+    line-height: 1.7;
+  }
+  .tp-block.visible { display: block; }
+  .tp-block strong { color: var(--slate); }
+  .tp-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--green);
+    margin-bottom: 5px;
+  }
+  .tp-block ul { padding-left: 18px; margin-top: 4px; }
+  .tp-block ul li { margin-bottom: 5px; }
+
+  /* ── BIG STAT ── */
+  .big-stat-wrap {
+    background: var(--slate);
+    border-radius: 10px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-bottom: 22px;
+  }
+  .big-stat-num {
+    font-family: 'Roboto Slab', serif;
+    font-size: 72px;
+    font-weight: 700;
+    color: var(--lgreen);
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .big-stat-text {
+    color: #c8d8e8;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .big-stat-text strong { color: #fff; }
+
+  /* ── ACUITY NOTE ── */
+  .acuity-note {
+    background: #fff;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    font-size: 12.5px;
+    color: #4a5a68;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .acuity-note strong { color: var(--slate); }
+
+  /* ── BARRIER BARS ── */
+  .barrier-section { margin-bottom: 16px; }
+  .barrier-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .barrier-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--slate);
+    min-width: 230px;
+  }
+  .barrier-bar-wrap {
+    flex: 1;
+    background: var(--gray2);
+    border-radius: 20px;
+    height: 16px;
+    overflow: hidden;
+  }
+  .barrier-bar {
+    height: 100%;
+    border-radius: 20px;
+    background: var(--blue);
+    transition: width .6s ease;
+  }
+  .barrier-pct {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--slate);
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* ── CALL MIX BARS ── */
+  .call-mix-wrap { margin: 16px 0; }
+  .call-mix-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .call-mix-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--slate);
+    min-width: 200px;
+  }
+  .call-mix-bar-wrap {
+    flex: 1;
+    background: var(--gray2);
+    border-radius: 20px;
+    height: 20px;
+    overflow: hidden;
+  }
+  .call-mix-bar {
+    height: 100%;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .call-mix-pct {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--slate);
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* ── SPOTLIGHT CARD ── */
+  .spotlight {
+    background: linear-gradient(135deg, var(--green) 0%, #2e7a00 100%);
+    border-radius: 10px;
+    padding: 22px 26px;
+    color: #fff;
+    margin-top: 18px;
+  }
+  .spotlight-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #e8ffcc;
+  }
+  .spotlight-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255,255,255,.9);
+  }
+
+  /* ── AGENDA CARD ── */
+  .agenda-card {
+    background: var(--slate);
+    border-radius: 10px;
+    padding: 26px 30px;
+    color: #c8d8e8;
+  }
+  .agenda-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--lgreen);
+    margin-bottom: 16px;
+    letter-spacing: .3px;
+  }
+  .agenda-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .agenda-item:last-child { border-bottom: none; }
+  .agenda-num {
+    background: var(--teal);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── SLA TABLE ── */
+  .sla-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    margin-bottom: 30px;
+  }
+  .sla-table th {
+    background: var(--slate);
+    color: var(--gray1);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 16px;
+    text-align: left;
+  }
+  .sla-table td {
+    padding: 13px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--gray2);
+    color: #2a3a46;
+    line-height: 1.5;
+  }
+  .sla-table tr:last-child td { border-bottom: none; }
+  .sla-table tr:hover td { background: var(--gray3); }
+  .status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .3px;
+  }
+  .status-badge.exceeds  { background: #e8f7d8; color: #2d7000; }
+  .status-badge.progress { background: #e8f1ff; color: #005b99; }
+  .status-badge.pending  { background: var(--gray2); color: #7a8a98; }
+
+  /* ── VALUE JOURNEY TILES ── */
+  .vj-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+  .vj-tile {
+    border-radius: 8px;
+    padding: 18px 16px;
+    position: relative;
+  }
+  .vj-tile.done     { background: var(--green);  color: #fff; }
+  .vj-tile.active   { background: var(--teal);   color: #fff; }
+  .vj-tile.building { background: var(--blue);   color: #fff; }
+  .vj-tile.upcoming { background: var(--gray1);  color: var(--slate); }
+  .vj-tile-phase {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: .75;
+    margin-bottom: 6px;
+  }
+  .vj-tile-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .vj-tile-body {
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: .92;
+  }
+  .vj-badge {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    background: rgba(255,255,255,.2);
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .vj-tile.upcoming .vj-badge { background: rgba(46,68,86,.12); color: var(--slate); }
+
+  /* ── ROI TILES ── */
+  .roi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  .roi-tile {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    border-top: 4px solid var(--blue);
+  }
+  .roi-tile:nth-child(1) { border-top-color: var(--green); }
+  .roi-tile:nth-child(2) { border-top-color: var(--teal); }
+  .roi-tile:nth-child(3) { border-top-color: var(--purple); }
+  .roi-tile:nth-child(4) { border-top-color: var(--orange); }
+  .roi-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .roi-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 8px;
+  }
+  .roi-body {
+    font-size: 12.5px;
+    color: #4a5a68;
+    line-height: 1.65;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--slate);
+    color: var(--gray1);
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 11px;
+    letter-spacing: .5px;
+  }
+
+  /* ── DIVIDER ── */
+  .sec-divider { border: none; border-top: 1px solid var(--gray1); margin: 36px 0; }
+
+  @media (max-width: 768px) {
+    .hero { flex-direction: column; padding: 28px 20px; }
+    .hero-kpis { flex-direction: row; flex-wrap: wrap; min-width: unset; }
+    .content { padding: 20px 18px 40px; }
+    .vj-grid { grid-template-columns: repeat(2, 1fr); }
+    .roi-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .value-banner { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ STICKY NAV ══ -->
+<nav class="nav">
+  <span class="nav-brand">Pyx Health</span>
+  <div class="nav-tabs">
+    <button class="tab-btn active" id="btn-client" onclick="switchTab('client', this)">Client View</button>
+    <button class="tab-btn" id="btn-value" onclick="switchTab('value', this)">Value View</button>
+  </div>
+  <button class="tp-toggle-btn" id="tp-btn" onclick="toggleTP(this)">Talking Points</button>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     TAB 1: CLIENT VIEW
+══════════════════════════════════════════ -->
+<div id="tab-client" class="tab-content active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Texas STAR Medicaid &middot; Month 2 of 12</div>
+      <h1 class="hero-h1">
+        <span class="brand">Community Health Choice</span>
+        <span class="divider">|</span>
+        <span class="sub-brand">Pyx Health Engagement Program</span>
+      </h1>
+      <p class="hero-sub">
+        Go Live April 2026 &nbsp;&middot;&nbsp; Data through June 15, 2026 &nbsp;&middot;&nbsp; Adult Medicaid 18+ &nbsp;&middot;&nbsp; 94,706 Member Eligibility File
+      </p>
+    </div>
+    <div class="hero-kpis">
+      <div class="hero-kpi">
+        <div class="val">125</div>
+        <div class="lbl">Total Enrolled</div>
+      </div>
+      <div class="hero-kpi">
+        <div class="val">65</div>
+        <div class="lbl">Enrolled Last 30 Days</div>
+      </div>
+      <div class="hero-kpi">
+        <div class="val">25.7%</div>
+        <div class="lbl">Conversion Rate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALUE ANCHOR BANNER -->
+  <div class="value-banner">
+    In the first 7 weeks of engagement, Pyx has enrolled <strong>125 CHC members</strong>, established loneliness and distress baselines for the full enrolled population, and connected members to 52 community resources — while screening at 60% PRAPARE call rate to build the SDoH intelligence the plan needs to close care gaps and improve quality outcomes.
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+
+    <!-- SWIMLANE TIMELINE -->
+    <div class="tl-wrap">
+      <div class="section-eyebrow">Program Progress</div>
+      <div class="section-title" style="margin-bottom:18px;">Where We Are in the Engagement Journey</div>
+      <div class="tl-label-row">
+        <div class="tl-phase-label">Implementation &amp; Launch</div>
+        <div class="tl-phase-label">Outreach &amp; Enrollment</div>
+        <div class="tl-phase-label">Deep Engagement</div>
+        <div class="tl-phase-label">Resource Nav &amp; Outcomes</div>
+      </div>
+      <div class="tl-sw-bar">
+        <div class="tl-now">Now &middot; Month 2</div>
+        <div class="tl-phase done">Phase 1</div>
+        <div class="tl-phase active">Phase 2</div>
+        <div class="tl-phase building">Phase 3</div>
+        <div class="tl-phase upcoming">Phase 4</div>
+      </div>
+      <div class="tl-sub-row">
+        <div class="tl-date">April 2026</div>
+        <div class="tl-date">May – Jun 2026</div>
+        <div class="tl-date">Building</div>
+        <div class="tl-date">Upcoming</div>
+      </div>
+    </div>
+
+    <hr class="sec-divider">
+
+    <!-- ENROLLMENT KPIs -->
+    <div class="section-block">
+      <div class="section-eyebrow">Enrollment</div>
+      <div class="section-title">Program Ramp — 7 Weeks In</div>
+      <p class="section-lead">Enrollment is accelerating. 52% of all enrollments occurred in the last 30 days, confirming outreach momentum is building as the program matures.</p>
+
+      <div class="kpi-grid">
+        <div class="kpi-card green">
+          <div class="kpi-val">125</div>
+          <div class="kpi-lbl">Total Enrolled Since Go Live</div>
+          <div class="kpi-ctx">Active members receiving personalized engagement</div>
+        </div>
+        <div class="kpi-card teal">
+          <div class="kpi-val">65</div>
+          <div class="kpi-lbl">Enrolled Last 30 Days</div>
+          <div class="kpi-ctx">52% of all enrollments in 30 days — program is accelerating</div>
+        </div>
+        <div class="kpi-card blue">
+          <div class="kpi-val">25.7%</div>
+          <div class="kpi-lbl">Overall Conversion Rate</div>
+          <div class="kpi-ctx">2.5&times; the contractual 10% engagement target</div>
+        </div>
+        <div class="kpi-card orange">
+          <div class="kpi-val">398</div>
+          <div class="kpi-lbl">Unique Members Outreached</div>
+          <div class="kpi-ctx">0.4% of 94,706 eligible — significant runway to grow</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-val">38.5%</div>
+          <div class="kpi-lbl">Conversion from Live Contact</div>
+          <div class="kpi-ctx">Members who answer are joining — model is resonating</div>
+        </div>
+      </div>
+
+      <div class="tp-block">
+        <div class="tp-label">Talking Point</div>
+        Conversion rates above <strong>25%</strong> confirm members respond when the program is built for them — not just built for scale. At 38.5% conversion from live contact, the Pyx care team approach is resonating with CHC's Medicaid population. With only 0.4% of eligible members outreached, enrollment runway is substantial.
+      </div>
+    </div>
+
+    <hr class="sec-divider">
+
+    <!-- CLINICAL SCREENING -->
+    <div class="section-block">
+      <div class="section-eyebrow">Clinical Baselines</div>
+      <div class="section-title">What We Now Know About CHC Members</div>
+
+      <div class="big-stat-wrap">
+        <div class="big-stat-num">75%</div>
+        <div class="big-stat-text">
+          <strong>of screened members have at least one social need.</strong><br>
+          Pyx has completed 433 UCLA-3, 425 PHQ-4, 312 Well-Being, and 261 PRAPARE screenings — population-level intelligence that did not exist in the clinical record before this program.
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card purple">
+          <div class="kpi-val">4.7</div>
+          <div class="kpi-lbl">UCLA-3 Avg Score</div>
+          <div class="kpi-ctx">Scale 3–9 &middot; &ge;6 = lonely threshold &middot; 433 completions</div>
+        </div>
+        <div class="kpi-card orange">
+          <div class="kpi-val">3.5</div>
+          <div class="kpi-lbl">PHQ-4 Avg Score</div>
+          <div class="kpi-ctx">Mild distress range (3–5) &middot; 425 completions</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-val">75%</div>
+          <div class="kpi-lbl">SDoH Need Rate</div>
+          <div class="kpi-ctx">At least one identified social need among screened members</div>
+        </div>
+        <div class="kpi-card teal">
+          <div class="kpi-val">261</div>
+          <div class="kpi-lbl">PRAPARE Completions</div>
+          <div class="kpi-ctx">SDoH screener &middot; social needs mapped at population level</div>
+        </div>
+      </div>
+
+      <div class="acuity-note">
+        <strong>Acuity insight:</strong> PHQ-4 peaks in the 35–44 age group (avg 4.1) — working-age adults navigating the dual burden of economic stress and mental distress. This same cohort carries the heaviest SDoH need, positioning them for high-impact, early intervention before care gaps widen.
+      </div>
+
+      <div class="tp-block">
+        <div class="tp-label">Talking Point</div>
+        <ul>
+          <li>A UCLA-3 of <strong>4.7</strong> means the average enrolled CHC member is approaching the lonely threshold (&ge;6). This is a clinical warning signal — social isolation correlates directly with avoidable utilization and poor medication adherence.</li>
+          <li>PHQ-4 of <strong>3.5</strong> places the population in mild distress — exactly the intervention window where Pyx has the greatest impact before members become high-utilizers.</li>
+          <li><strong>75% SDoH need rate</strong> means three out of four screened members have a social barrier that a claims file would never reveal. This is the data advantage Pyx delivers.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="sec-divider">
+
+    <!-- BARRIER INTELLIGENCE -->
+    <div class="section-block">
+      <div class="section-eyebrow">SDoH Intelligence</div>
+      <div class="section-title">Barrier Profile — 75% of Members Have Identified Needs</div>
+      <p class="section-lead">Resource connection data reveals the nature of member need. Care access and provider navigation are the primary gaps Pyx is bridging, followed by behavioral health, food security, and economic stability.</p>
+
+      <div class="barrier-section">
+        <div class="barrier-row">
+          <div class="barrier-label">Care Access / Provider Navigation</div>
+          <div class="barrier-bar-wrap"><div class="barrier-bar" style="width:80%;background:var(--blue);"></div></div>
+          <div class="barrier-pct">Leading</div>
+        </div>
+        <div class="barrier-row">
+          <div class="barrier-label">Member Portal &amp; Self-Service Access</div>
+          <div class="barrier-bar-wrap"><div class="barrier-bar" style="width:42%;background:var(--teal);"></div></div>
+          <div class="barrier-pct">High</div>
+        </div>
+        <div class="barrier-row">
+          <div class="barrier-label">Behavioral Health Support</div>
+          <div class="barrier-bar-wrap"><div class="barrier-bar" style="width:22%;background:var(--purple);"></div></div>
+          <div class="barrier-pct">Active</div>
+        </div>
+        <div class="barrier-row">
+          <div class="barrier-label">Food &amp; Nutrition Access</div>
+          <div class="barrier-bar-wrap"><div class="barrier-bar" style="width:18%;background:var(--orange);"></div></div>
+          <div class="barrier-pct">Active</div>
+        </div>
+        <div class="barrier-row">
+          <div class="barrier-label">Housing &amp; Economic Stability</div>
+          <div class="barrier-bar-wrap"><div class="barrier-bar" style="width:18%;background:var(--green);"></div></div>
+          <div class="barrier-pct">Active</div>
+        </div>
+        <div class="barrier-row">
+          <div class="barrier-label">Community &amp; Social Connections</div>
+          <div class="barrier-bar-wrap"><div class="barrier-bar" style="width:10%;background:var(--slate);"></div></div>
+          <div class="barrier-pct">Building</div>
+        </div>
+      </div>
+
+      <p style="font-size:11.5px;color:#6a7a88;margin-top:6px;">Top connections include: Find a Provider Tool, Member Portal, Baker Ripley, Behavioral Health Services, Meals on Wheels, Memorial Assistance Ministries. Proportional to resource connection data as of 6/15/2026.</p>
+    </div>
+
+    <hr class="sec-divider">
+
+    <!-- ENGAGEMENT SUMMARY -->
+    <div class="section-block">
+      <div class="section-eyebrow">Platform Engagement</div>
+      <div class="section-title">Care Team Activity</div>
+      <p class="section-lead">Dual-channel engagement reaches members through both the Pyx platform and direct care team contact, maximizing reach and response across the CHC Medicaid population.</p>
+
+      <div class="kpi-grid">
+        <div class="kpi-card green">
+          <div class="kpi-val">825</div>
+          <div class="kpi-lbl">Members Reached via Platform</div>
+          <div class="kpi-ctx">Outreach + enrollment contacts &middot; dual-channel model</div>
+        </div>
+        <div class="kpi-card teal">
+          <div class="kpi-val">1,470</div>
+          <div class="kpi-lbl">Total Engagement Calls</div>
+          <div class="kpi-ctx">Across all care team interaction types</div>
+        </div>
+        <div class="kpi-card blue">
+          <div class="kpi-val">1.7</div>
+          <div class="kpi-lbl">Avg Calls per Member</div>
+          <div class="kpi-ctx">Sustained touchpoint cadence per engaged member</div>
+        </div>
+        <div class="kpi-card orange">
+          <div class="kpi-val">52</div>
+          <div class="kpi-lbl">Resource Connections</div>
+          <div class="kpi-ctx">Community resources matched to member needs</div>
+        </div>
+        <div class="kpi-card slate">
+          <div class="kpi-val">60%</div>
+          <div class="kpi-lbl">PRAPARE Call Mix</div>
+          <div class="kpi-ctx">Screening-first approach building care intelligence</div>
+        </div>
+      </div>
+
+      <div class="call-mix-wrap">
+        <div class="section-eyebrow" style="margin-bottom:10px;">Call Type Distribution</div>
+        <div class="call-mix-row">
+          <div class="call-mix-label">PRAPARE Screening</div>
+          <div class="call-mix-bar-wrap"><div class="call-mix-bar" style="width:60%;background:var(--teal);">60%</div></div>
+          <div class="call-mix-pct">60%</div>
+        </div>
+        <div class="call-mix-row">
+          <div class="call-mix-label">Resource Navigation</div>
+          <div class="call-mix-bar-wrap"><div class="call-mix-bar" style="width:33%;background:var(--blue);">33%</div></div>
+          <div class="call-mix-pct">33%</div>
+        </div>
+        <div class="call-mix-row">
+          <div class="call-mix-label">Other (UCLA, PHQ, companion)</div>
+          <div class="call-mix-bar-wrap"><div class="call-mix-bar" style="width:7%;background:var(--gray1);color:var(--slate);"></div></div>
+          <div class="call-mix-pct">~7%</div>
+        </div>
+      </div>
+
+      <div class="spotlight">
+        <div class="spotlight-title">Screening-First Model</div>
+        <div class="spotlight-body">60% of all care team calls are PRAPARE screenings — Pyx is building the social needs profile for CHC's Medicaid population before accelerating resource navigation. This is how the program generates SDoH intelligence at scale: screening first, navigating second. As the screening phase matures, resource navigation volume will accelerate proportionally.</div>
+      </div>
+
+      <div class="tp-block">
+        <div class="tp-label">Talking Point</div>
+        The 60% PRAPARE call mix is intentional, not incidental. The screening-first model ensures every resource connection that follows is grounded in documented member need — which translates into the SDoH documentation that health plans need to demonstrate HEDIS and equity performance. <strong>The data infrastructure is being built now.</strong>
+      </div>
+    </div>
+
+    <hr class="sec-divider">
+
+    <!-- AGENDA / WHAT'S NEXT -->
+    <div class="section-block">
+      <div class="section-eyebrow">Meeting Agenda</div>
+      <div class="section-title">Today's Discussion &mdash; Month 2 Review</div>
+      <div class="agenda-card">
+        <div class="agenda-title">Agenda Items</div>
+        <div class="agenda-item">
+          <div class="agenda-num">1</div>
+          <div><strong style="color:#c8d8e8;">Enrollment Update</strong> &mdash; 125 enrolled, 65 in the last 30 days; ramp-up trajectory and outreach expansion into 94,706 eligible pool</div>
+        </div>
+        <div class="agenda-item">
+          <div class="agenda-num">2</div>
+          <div><strong style="color:#c8d8e8;">Screening Progress</strong> &mdash; 261 PRAPARE completions, 75% SDoH need rate, population barrier profile building; acuity signal in 35–44 cohort</div>
+        </div>
+        <div class="agenda-item">
+          <div class="agenda-num">3</div>
+          <div><strong style="color:#c8d8e8;">Resource Navigation Acceleration</strong> &mdash; 52 connections to date; plan for Month 3 ramp as screening phase matures into navigation phase</div>
+        </div>
+        <div class="agenda-item">
+          <div class="agenda-num">4</div>
+          <div><strong style="color:#c8d8e8;">Eligibility File Refresh</strong> &mdash; Confirm cadence to support the next outreach wave into the full 94,706 member eligibility file</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /tab-client -->
+
+
+<!-- ══════════════════════════════════════════
+     TAB 2: VALUE VIEW
+══════════════════════════════════════════ -->
+<div id="tab-value" class="tab-content">
+
+  <!-- VALUE ANCHOR BANNER (dark) -->
+  <div class="value-banner dark">
+    Every screening Pyx completes is a quality data point that claims cannot produce. Every resource connection is a care gap closure in progress. <strong>125 enrolled CHC members</strong> are generating the leading indicators that become HEDIS performance, SDoH documentation, and member satisfaction outcomes.
+  </div>
+
+  <div class="content">
+
+    <!-- SLA TABLE -->
+    <div class="section-block">
+      <div class="section-eyebrow">Contract Performance</div>
+      <div class="section-title">SLA Metrics — Month 2 Status</div>
+      <table class="sla-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Target</th>
+            <th>Current Status</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Engagement Rate</strong></td>
+            <td>10%</td>
+            <td>25.7% conversion — 2.5&times; target</td>
+            <td><span class="status-badge exceeds">&#10003; Exceeds</span></td>
+          </tr>
+          <tr>
+            <td><strong>SDOH Screener Completion</strong></td>
+            <td>60%</td>
+            <td>261 PRAPARE completions &middot; active screening phase at 60% of calls &middot; building toward target</td>
+            <td><span class="status-badge progress">In Progress</span></td>
+          </tr>
+          <tr>
+            <td><strong>Resource Connections</strong></td>
+            <td>60%</td>
+            <td>52 connections to date &middot; navigation accelerating as screening matures</td>
+            <td><span class="status-badge progress">In Progress</span></td>
+          </tr>
+          <tr>
+            <td><strong>Member Satisfaction</strong></td>
+            <td>60%</td>
+            <td>Not yet assessed — assessment planned for Month 3+</td>
+            <td><span class="status-badge pending">Pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- VALUE JOURNEY -->
+    <div class="section-block">
+      <div class="section-eyebrow">Program Journey</div>
+      <div class="section-title">From Reach to Impact — Where CHC Is Today</div>
+      <div class="vj-grid">
+        <div class="vj-tile done">
+          <div class="vj-badge">Complete</div>
+          <div class="vj-tile-phase">Phase 1 &amp; 2</div>
+          <div class="vj-tile-title">Reach</div>
+          <div class="vj-tile-body">
+            125 enrolled<br>
+            398 outreached<br>
+            25.7% conversion<br>
+            38.5% live contact conversion
+          </div>
+        </div>
+        <div class="vj-tile active">
+          <div class="vj-badge">Active Now</div>
+          <div class="vj-tile-phase">Phase 2 &rarr; 3</div>
+          <div class="vj-tile-title">Screen</div>
+          <div class="vj-tile-body">
+            UCLA-3: 4.7 avg<br>
+            PHQ-4: 3.5 avg<br>
+            75% SDoH need rate<br>
+            Baselines established
+          </div>
+        </div>
+        <div class="vj-tile building">
+          <div class="vj-badge">Building</div>
+          <div class="vj-tile-phase">Phase 3</div>
+          <div class="vj-tile-title">Navigate</div>
+          <div class="vj-tile-body">
+            52 resource connections<br>
+            PRAPARE call volume shifting to navigation<br>
+            Month 3+ acceleration
+          </div>
+        </div>
+        <div class="vj-tile upcoming">
+          <div class="vj-badge">Upcoming</div>
+          <div class="vj-tile-phase">Phase 4</div>
+          <div class="vj-tile-title">Impact</div>
+          <div class="vj-tile-body">
+            Quality measure movement<br>
+            Care gap closure<br>
+            Satisfaction outcomes<br>
+            HEDIS performance
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLAN VALUE / ROI TILES -->
+    <div class="section-block">
+      <div class="section-eyebrow">Plan Value</div>
+      <div class="section-title">What the CHC Program Delivers for the Plan</div>
+      <div class="roi-grid">
+        <div class="roi-tile">
+          <div class="roi-title">HEDIS &amp; Quality Measures</div>
+          <div class="roi-body">PHQ-4 baselines create behavioral health access and follow-up measure documentation. The 35–44 cohort distress flags (PHQ-4 avg 4.1) support FUH/FUM pathway identification — exactly the population at risk for avoidable utilization and quality measure failures.</div>
+        </div>
+        <div class="roi-tile">
+          <div class="roi-title">SDoH Data &amp; Population Intelligence</div>
+          <div class="roi-body">75% SDoH need rate and 261 PRAPARE completions deliver population-level social needs mapping that claims data cannot produce. Care access as the primary gap — 42% of resource connections are provider navigation — maps directly to HEDIS access and continuity measures.</div>
+        </div>
+        <div class="roi-tile">
+          <div class="roi-title">Member Satisfaction</div>
+          <div class="roi-body">Dual-channel platform engagement (app + care team) for 825 members creates consistent, personalized touchpoints. 38.5% live-contact conversion demonstrates members value the interaction. Satisfaction metric formal assessment planned for Month 3+, with strong leading indicators from enrollment momentum.</div>
+        </div>
+        <div class="roi-tile">
+          <div class="roi-title">Health Equity</div>
+          <div class="roi-body">CHC's diverse Texas Medicaid population faces layered barriers — food, housing, transportation, and care access. Pyx is actively connecting members to Baker Ripley, Memorial Assistance Ministries, Meals on Wheels, and Behavioral Health Services, addressing the social determinants driving disparate outcomes in the STAR program.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TALKING POINTS (VALUE VIEW) -->
+    <div class="section-block">
+      <div class="section-eyebrow">Key Messages</div>
+      <div class="section-title">What This Data Means for CHC</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="background:#fff;border-radius:8px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid var(--green);">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green);margin-bottom:8px;">Enrollment Signal</div>
+          <p style="font-size:13px;line-height:1.65;color:#2a3a46;">25.7% conversion at 7 weeks confirms the CHC population is responding — the outreach model is working before most programs have finished implementation.</p>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid var(--teal);">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--teal);margin-bottom:8px;">Screening Velocity</div>
+          <p style="font-size:13px;line-height:1.65;color:#2a3a46;">261 PRAPARE completions mean Pyx has mapped social needs for more members than are currently enrolled — the screening machine is ahead of the enrollment curve.</p>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid var(--blue);">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);margin-bottom:8px;">Care Access Signal</div>
+          <p style="font-size:13px;line-height:1.65;color:#2a3a46;">Find a Provider Tool at 42% of resource connections tells us care access — not just social needs — is the primary gap Pyx is bridging for CHC members. This maps directly to HEDIS access measures.</p>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid var(--orange);">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--orange);margin-bottom:8px;">Data-Productive Phase</div>
+          <p style="font-size:13px;line-height:1.65;color:#2a3a46;">The CHC program is in its most data-productive phase: screening-heavy calls are building the population intelligence that drives every downstream quality outcome.</p>
+        </div>
+      </div>
+
+      <div class="tp-block" style="margin-top:20px;">
+        <div class="tp-label">Presenter Notes — Value View</div>
+        <ul>
+          <li><strong>Lead with the conversion rate:</strong> 25.7% at 7 weeks is a headline number. The contractual target is 10%. This isn't marginal outperformance — it's structural.</li>
+          <li><strong>Frame 261 PRAPARE completions strategically:</strong> More members have been screened than are enrolled. The social needs data is building faster than the roster — a deliberate design, not a gap.</li>
+          <li><strong>Tie care access to quality:</strong> 42% of resource connections are provider navigation. HEDIS access measures — PCR, AWC, well-child visits — all depend on members having a connected provider. Pyx is actively closing that gap.</li>
+          <li><strong>Month 3 is the inflection point:</strong> As the screening phase matures, resource navigation volume will accelerate. The SLA metrics currently in progress will move toward completion as the program shifts phases.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /tab-value -->
+
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  Pyx Health &nbsp;|&nbsp; Community Health Choice &nbsp;|&nbsp; Texas STAR Medicaid &nbsp;|&nbsp; Data through 6/15/2026 &nbsp;|&nbsp; Confidential
+</footer>
+
+
+<script>
+  function switchTab(id, btn) {
+    // hide all tab content
+    document.querySelectorAll('.tab-content').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    // deactivate all tab buttons
+    document.querySelectorAll('.tab-btn').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    // show target tab
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function toggleTP(btn) {
+    var blocks = document.querySelectorAll('.tp-block');
+    var isActive = btn.classList.contains('active');
+    if (isActive) {
+      blocks.forEach(function(b) { b.classList.remove('visible'); });
+      btn.classList.remove('active');
+      btn.textContent = 'Talking Points';
+    } else {
+      blocks.forEach(function(b) { b.classList.add('visible'); });
+      btn.classList.add('active');
+      btn.textContent = 'Hide Talking Points';
+    }
+  }
+</script>
+
+</body>
+</html>
